@@ -45,41 +45,46 @@ import React, { useReducer, useState } from "react";
 // ! useReducer______________________end
 // ! useContext______________________start
 
-import Context from "./Context";
-import Form from "./Form";
-import List from "./List";
+// import Context from "./Context";
+// import Form from "./Form";
+// import List from "./List";
+
+// function App() {
+//   const [inputValue, setInputValue] = useState("");
+//   const [lists, setLists] = useState([]);
+//   const [isEditMode, setEditMode] = useState(false);
+//   const [editList, setEditList] = useState("");
+
+//   function deleteItem(id) {
+//     setLists(lists.filter((list) => list.id !== id));
+//   }
+//   return (
+//     <Context.Provider
+//       value={{
+//         inputValue,
+//         setInputValue,
+//         lists,
+//         deleteItem,
+//         setLists,
+//         isEditMode,
+//         setEditMode,
+//         editList,
+//         setEditList,
+//       }}
+//     >
+//       <div>
+//         <h1>Context Api</h1>
+//         <Form />
+//         <List />
+//       </div>
+//     </Context.Provider>
+//   );
+// }
+// ! useContext_____________________end
+//! Router________________________start
 
 function App() {
-  const [inputValue, setInputValue] = useState("");
-  const [lists, setLists] = useState([]);
-  const [isEditMode, setEditMode] = useState(false);
-  const [editList, setEditList] = useState("");
-
-  function deleteItem(id) {
-    setLists(lists.filter((list) => list.id !== id));
-  }
-  return (
-    <Context.Provider
-      value={{
-        inputValue,
-        setInputValue,
-        lists,
-        deleteItem,
-        setLists,
-        isEditMode,
-        setEditMode,
-        editList,
-        setEditList,
-      }}
-    >
-      <div>
-        <h1>Context Api</h1>
-        <Form />
-        <List />
-      </div>
-    </Context.Provider>
-  );
+  return <h1>React Router</h1>;
 }
-// ! useContext_____________________end
-
+//! Router________________________end
 export default App;

@@ -2,19 +2,13 @@ import React, { useContext } from "react";
 import Context from "./Context";
 
 const List = () => {
-  const {
-    lists,
-    deleteItem,
-    editList,
-    setEditList,
-    setEditMode,
-    setInputValue,
-  } = useContext(Context);
+  const { lists, deleteItem, setEditList, setEditMode, setInputValue } =
+    useContext(Context);
 
   function editItem(list) {
     setEditMode(true);
     setEditList(list.id);
-    setInputValue(list.item);
+    setInputValue(list.list);
   }
   return (
     <ul>
