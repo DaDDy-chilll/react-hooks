@@ -83,7 +83,6 @@ import React, { useEffect, useReducer, useState } from "react";
 // ! useContext_____________________end
 //! Router________________________start
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import NavBar from "./routes/NavBar";
 import Home from "./routes/Home";
 import About from "./routes/About";
 import Contact from "./routes/Contact";
@@ -94,8 +93,11 @@ import Dashborad from "./routes/Dashborad";
 import Profile from "./routes/Profile";
 import ShareLayout from "./routes/ShareLayout";
 import SingleProduct from "./routes/SingleProduct";
+import ProtectedRoute from "./routes/ProtectedRoute";
+
 function App() {
   const [products, setProducts] = useState([]);
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
     fetch("https://fakestoreapi.com/products")
@@ -112,7 +114,14 @@ function App() {
           <Route path="about" element={<About />} />
           <Route path="contact" element={<Contact />} />
 
-          <Route path="dashboard" element={<Dashborad />}>
+          <Route
+            path="dashboard"
+            element={
+              <ProtectedRoute user={user}>
+                <Dashborad user={user} />
+              </ProtectedRoute>
+            }
+          >
             <Route path="profile" element={<Profile />} />
           </Route>
 
@@ -121,7 +130,7 @@ function App() {
             path="products/:productId"
             element={<SingleProduct products={products} />}
           />
-          <Route path="login" element={<Login />} />
+          <Route path="login" element={<Login setUser={setUser} />} />
           <Route path="*" element={<Error />} />
         </Route>
       </Routes>

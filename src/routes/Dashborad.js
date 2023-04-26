@@ -1,9 +1,10 @@
 import { Outlet } from "react-router-dom";
 
-function Dashborad() {
+function Dashborad({ user }) {
   return (
     <div>
-      <h1>Welcome to Dashboard</h1>
+      <h1>Hello, {user}</h1>
+      <h2>Welcome to Dashboard</h2>
       <Outlet />
     </div>
   );
