@@ -1,4 +1,4 @@
-import React, { useReducer, useState } from "react";
+import React, { useEffect, useReducer, useState } from "react";
 
 // ! useReducer______________________start
 // const intialValue = {
@@ -82,9 +82,51 @@ import React, { useReducer, useState } from "react";
 // }
 // ! useContext_____________________end
 //! Router________________________start
-
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import NavBar from "./routes/NavBar";
+import Home from "./routes/Home";
+import About from "./routes/About";
+import Contact from "./routes/Contact";
+import Products from "./routes/Products";
+import Login from "./routes/Login";
+import Error from "./routes/Error";
+import Dashborad from "./routes/Dashborad";
+import Profile from "./routes/Profile";
+import ShareLayout from "./routes/ShareLayout";
+import SingleProduct from "./routes/SingleProduct";
 function App() {
-  return <h1>React Router</h1>;
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    fetch("https://fakestoreapi.com/products")
+      .then((res) => res.json())
+      .then((data) => setProducts(data));
+  }, []);
+  return (
+    <BrowserRouter>
+      <h1>React Router</h1>
+
+      <Routes>
+        <Route path="/" element={<ShareLayout />}>
+          <Route index element={<Home />} />
+          <Route path="about" element={<About />} />
+          <Route path="contact" element={<Contact />} />
+
+          <Route path="dashboard" element={<Dashborad />}>
+            <Route path="profile" element={<Profile />} />
+          </Route>
+
+          <Route path="products" element={<Products products={products} />} />
+          <Route
+            path="products/:productId"
+            element={<SingleProduct products={products} />}
+          />
+          <Route path="login" element={<Login />} />
+          <Route path="*" element={<Error />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
+  );
 }
 //! Router________________________end
 export default App;
