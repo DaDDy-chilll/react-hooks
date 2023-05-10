@@ -196,14 +196,86 @@ import React, { useCallback, useEffect, useReducer, useState } from "react";
 // }
 //! Memo ** useCallback________________________end
 //! useRef________________________start
+import {
+  signInWithGooglePopUp,
+  createUserDocumentFromAuth,
+  createAuthUserWithEmailAndPassword,
+} from "./utils/firebase.utils";
+
+const defaultFormFields = {
+  displayName: "",
+  email: "",
+  password: "",
+  confirmePassword: "",
+};
+
 function App() {
+  const [formFields, setFormFields] = useState(defaultFormFields);
+  const { displayName, email, password, confirmePassword } = formFields;
+
+  const loginGoogle = async () => {
+    const { user } = await signInWithGooglePopUp();
+    const newUser = await createUserDocumentFromAuth(user);
+    console.log(newUser);
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormFields({ ...formFields, [name]: value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (password !== confirmePassword) return;
+    const { user } = await createAuthUserWithEmailAndPassword(email, password);
+    console.log(user);
+    await createUserDocumentFromAuth(user, { displayName });
+  };
+
   return (
-    <div className="container">
-      <h1 className="text-center">useRef</h1>
-      <form>
-        <input type="text" className="form-control" placeholder="Name" />
-        <button className="btn btn-primary">Submit</button>
-      </form>
+    <div>
+      <button onClick={loginGoogle}>SignIn with Google</button>
+      <div>
+        <h1>Sigup username and email</h1>
+        <form onSubmit={handleSubmit}>
+          <label htmlFor="displayName">Username</label>
+          <input
+            type="text"
+            name="displayName"
+            id="displayName"
+            value={displayName}
+            onChange={handleChange}
+          />
+
+          <label htmlFor="email">Email</label>
+          <input
+            type="email"
+            name="email"
+            id="email"
+            value={email}
+            onChange={handleChange}
+          />
+
+          <label htmlFor="password">Password</label>
+          <input
+            type="password"
+            name="password"
+            id="password"
+            value={password}
+            onChange={handleChange}
+          />
+
+          <label htmlFor="confirmePassword">Confirme Password</label>
+          <input
+            type="password"
+            name="confirmePassword"
+            id="confirmePassword"
+            value={confirmePassword}
+            onChange={handleChange}
+          />
+          <button type="submit">Sign Up</button>
+        </form>
+      </div>
     </div>
   );
 }
